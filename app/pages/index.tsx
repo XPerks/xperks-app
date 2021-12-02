@@ -1,272 +1,180 @@
-import { Suspense } from "react"
-import { Image, Link, BlitzPage, useMutation, Routes } from "blitz"
-import Layout from "app/core/layouts/Layout"
-import { useCurrentUser } from "app/core/hooks/useCurrentUser"
-import logout from "app/auth/mutations/logout"
-import logo from "public/logo.png"
+import { Image, Link, BlitzPage, useMutation, Routes, useSession } from "blitz"
+import PublicLayout from "app/core/layouts/PublicLayout"
+import {
+  Container,
+  Stack,
+  Flex,
+  Box,
+  Heading,
+  Text,
+  Button,
+  Image as ChakraImage,
+  Icon,
+  IconButton,
+  createIcon,
+  IconProps,
+  useColorModeValue,
+  Wrap,
+  SimpleGrid,
+  Divider
+} from '@chakra-ui/react'
+import FeaturedCoach from "app/marketing/components/FeaturedCoachPreviewCard"
+import PopularGamesSection from "app/marketing/components/PopularGamesSection"
 
 /*
  * This file is just for a pleasant getting started page for your new app.
  * You can delete everything in here and start from scratch if you like.
  */
 
-const UserInfo = () => {
-  const currentUser = useCurrentUser()
-  const [logoutMutation] = useMutation(logout)
-
-  if (currentUser) {
-    return (
-      <>
-        <button
-          className="button small"
-          onClick={async () => {
-            await logoutMutation()
-          }}
-        >
-          Logout
-        </button>
-        <div>
-          User id: <code>{currentUser.id}</code>
-          <br />
-          User role: <code>{currentUser.role}</code>
-        </div>
-      </>
-    )
-  } else {
-    return (
-      <>
-        <Link href={Routes.SignupPage()}>
-          <a className="button small">
-            <strong>Sign Up</strong>
-          </a>
-        </Link>
-        <Link href={Routes.LoginPage()}>
-          <a className="button small">
-            <strong>Login</strong>
-          </a>
-        </Link>
-      </>
-    )
-  }
-}
-
 const Home: BlitzPage = () => {
   return (
-    <div className="container">
-      <main>
-        <div className="logo">
-          <Image src={logo} alt="blitzjs" />
-        </div>
-        <p>
-          <strong>Congrats!</strong> Your app is ready, including user sign-up and log-in.
-        </p>
-        <div className="buttons" style={{ marginTop: "1rem", marginBottom: "1rem" }}>
-          <Suspense fallback="Loading...">
-            <UserInfo />
-          </Suspense>
-        </div>
-        <p>
-          <strong>
-            To add a new model to your app, <br />
-            run the following in your terminal:
-          </strong>
-        </p>
-        <pre>
-          <code>blitz generate all project name:string</code>
-        </pre>
-        <div style={{ marginBottom: "1rem" }}>(And select Yes to run prisma migrate)</div>
-        <div>
-          <p>
-            Then <strong>restart the server</strong>
-          </p>
-          <pre>
-            <code>Ctrl + c</code>
-          </pre>
-          <pre>
-            <code>blitz dev</code>
-          </pre>
-          <p>
-            and go to{" "}
-            <Link href="/projects">
-              <a>/projects</a>
-            </Link>
-          </p>
-        </div>
-        <div className="buttons" style={{ marginTop: "5rem" }}>
-          <a
-            className="button"
-            href="https://blitzjs.com/docs/getting-started?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-          <a
-            className="button-outline"
-            href="https://github.com/blitz-js/blitz"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Github Repo
-          </a>
-          <a
-            className="button-outline"
-            href="https://discord.blitzjs.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Discord Community
-          </a>
-        </div>
-      </main>
+    <>
+    <Container maxW={'7xl'}>
+      <Stack
+        align={'center'}
+        spacing={{ base: 8, md: 10 }}
+        py={{ base: 20, md: 28 }}
+        direction={{ base: 'column', md: 'row' }}>
+        <Stack flex={1} spacing={{ base: 5, md: 10 }}>
+          <Heading
+            lineHeight={1.1}
+            fontWeight={600}
+            fontSize={{ base: '3xl', sm: '4xl', lg: '6xl' }}>
+            <Text
+              as={'span'}
+              position={'relative'}
+              // _after={{
+              //   content: "''",
+              //   width: 'full',
+              //   height: '25%',
+              //   position: 'absolute',
+              //   bottom: 1,
+              //   left: 0,
+              //   bg: 'green.400',
+              //   zIndex: -1,
+              // }}
+              >
+              Hire an expert coach,
+            </Text>
+            <br />
+            <Text as={'span'} color={'brand.green'}>
+              start winning more!
+            </Text>
+          </Heading>
+          <Text color={'gray.500'}>
+            Is your team in need of a coach, but you're unsure where to find one? Tired of constantly losing to high skill players? Looking to take your gaming skill to the next level? Hire an XPerks coach, and start winning more games today!
+          </Text>
+          <Stack
+            spacing={{ base: 4, sm: 6 }}
+            direction={{ base: 'column', sm: 'row' }}>
+            <Button
+              rounded={'lg'}
+              size={'lg'}
+              fontWeight={'normal'}
+              px={6}
+              colorScheme={'red'}
+              bg={'brand.green'}
+              _hover={{ bg: 'green.500' }}
+            >
+              Get started
+            </Button>
+            <Button
+              rounded={'lg'}
+              size={'lg'}
+              fontWeight={'normal'}
+              px={6}
+              leftIcon={<PlayIcon h={4} w={4} color={'gray.300'} />}>
+              How It Works
+            </Button>
+          </Stack>
+        </Stack>
+        <Flex
+          flex={1}
+          justify={'center'}
+          align={'center'}
+          position={'relative'}
+          w={'full'}>
 
-      <footer>
-        <a
-          href="https://blitzjs.com?utm_source=blitz-new&utm_medium=app-template&utm_campaign=blitz-new"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by Blitz.js
-        </a>
-      </footer>
+          <Box
+            position={'relative'}
+            height={'300px'}
+            rounded={'2xl'}
+            boxShadow={'2xl'}
+            width={'full'}
+            overflow={'hidden'}>
+            <IconButton
+              aria-label={'Play Button'}
+              variant={'ghost'}
+              _hover={{ bg: 'transparent' }}
+              icon={<PlayIcon w={12} h={12} />}
+              size={'lg'}
+              color={'white'}
+              position={'absolute'}
+              left={'50%'}
+              top={'50%'}
+              transform={'translateX(-50%) translateY(-50%)'}
+            />
+            <ChakraImage
+              alt={'Hero Image'}
+              fit={'cover'}
+              align={'center'}
+              w={'100%'}
+              h={'100%'}
+              src={
+                'esports-coach.jpg'
+              }
+            />
+          </Box>
+        </Flex>
+      </Stack>
+      <PopularGamesSection />
+      {/* <Box mt={{base: 24, md: 48}}>
+        <Heading size="2xl" my="8" textAlign="center">How It Works</Heading>
+        <Flex h="350vh" flexDir={{base: 'column', lg: 'row'}} justify="space-between">
+          <Box position="sticky" top={12} h="600px" w={{base: "100%", lg: "45%"}} mb={{base: "12", lg: 0}} bgColor="white"></Box>
+          <Box position="sticky" top={12} h="250px" w={{base: "100%", lg: "45%"}} bgColor="white"></Box>
+        </Flex>
+        <Flex h="350vh" flexDir={{base: 'column', lg: 'row'}} justify="space-between">
+          <Box position="sticky" top={12} h="600px" w={{base: "100%", lg: "45%"}} mb={{base: "12", lg: 0}} bgColor="white"></Box>
+          <Box position="sticky" top={12} h="250px" w={{base: "100%", lg: "45%"}} bgColor="white"></Box>
+        </Flex>
+        <Flex h="350vh" flexDir={{base: 'column', lg: 'row'}} justify="space-between">
+          <Box position="sticky" top={12} h="600px" w={{base: "100%", lg: "45%"}} mb={{base: "12", lg: 0}} bgColor="white"></Box>
+          <Box position="sticky" top={12} h="250px" w={{base: "100%", lg: "45%"}} bgColor="white"></Box>
+        </Flex>
+        <Flex h="350vh" flexDir={{base: 'column', lg: 'row'}} justify="space-between">
+          <Box position="sticky" top={12} h="600px" w={{base: "100%", lg: "45%"}} mb={{base: "12", lg: 0}} bgColor="white"></Box>
+          <Box position="sticky" top={12} h="250px" w={{base: "100%", lg: "45%"}} bgColor="white"></Box>
+        </Flex>
+      </Box> */}
+      <Box mt="36" width="100%">
+        <Heading>Meet some of our top talent.</Heading>
+        <Text>If you want to beat the best, you've gotta learn from the best.</Text>
+          <SimpleGrid mt="12" columns={{base: 1, md: 2, lg: 3, xl: 4}} spacing="6">
+            <FeaturedCoach />
+            <FeaturedCoach />
+            <FeaturedCoach />
+            <FeaturedCoach />
+          </SimpleGrid>
+          <Flex w="100%" justifyContent="center" my={{base: 12, md: 24}}>
+            <Button bg="brand.green" color="black" _hover={{bg: "green.300"}}>See All Coaches</Button>
+          </Flex>
+      </Box>
 
-      <style jsx global>{`
-        @import url("https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;700&display=swap");
-
-        html,
-        body {
-          padding: 0;
-          margin: 0;
-          font-family: "Libre Franklin", -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-            Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-        }
-
-        * {
-          -webkit-font-smoothing: antialiased;
-          -moz-osx-font-smoothing: grayscale;
-          box-sizing: border-box;
-        }
-        .container {
-          min-height: 100vh;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main {
-          padding: 5rem 0;
-          flex: 1;
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-        }
-
-        main p {
-          font-size: 1.2rem;
-        }
-
-        p {
-          text-align: center;
-        }
-
-        footer {
-          width: 100%;
-          height: 60px;
-          border-top: 1px solid #eaeaea;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          background-color: #45009d;
-        }
-
-        footer a {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer a {
-          color: #f4f4f4;
-          text-decoration: none;
-        }
-
-        .logo {
-          margin-bottom: 2rem;
-        }
-
-        .logo img {
-          width: 300px;
-        }
-
-        .buttons {
-          display: grid;
-          grid-auto-flow: column;
-          grid-gap: 0.5rem;
-        }
-        .button {
-          font-size: 1rem;
-          background-color: #6700eb;
-          padding: 1rem 2rem;
-          color: #f4f4f4;
-          text-align: center;
-        }
-
-        .button.small {
-          padding: 0.5rem 1rem;
-        }
-
-        .button:hover {
-          background-color: #45009d;
-        }
-
-        .button-outline {
-          border: 2px solid #6700eb;
-          padding: 1rem 2rem;
-          color: #6700eb;
-          text-align: center;
-        }
-
-        .button-outline:hover {
-          border-color: #45009d;
-          color: #45009d;
-        }
-
-        pre {
-          background: #fafafa;
-          border-radius: 5px;
-          padding: 0.75rem;
-          text-align: center;
-        }
-        code {
-          font-size: 0.9rem;
-          font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-            Bitstream Vera Sans Mono, Courier New, monospace;
-        }
-
-        .grid {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          flex-wrap: wrap;
-
-          max-width: 800px;
-          margin-top: 3rem;
-        }
-
-        @media (max-width: 600px) {
-          .grid {
-            width: 100%;
-            flex-direction: column;
-          }
-        }
-      `}</style>
-    </div>
+    </Container>
+    </>
   )
 }
 
+const PlayIcon = createIcon({
+  displayName: 'PlayIcon',
+  viewBox: '0 0 58 58',
+  d:
+    'M28.9999 0.562988C13.3196 0.562988 0.562378 13.3202 0.562378 29.0005C0.562378 44.6808 13.3196 57.438 28.9999 57.438C44.6801 57.438 57.4374 44.6808 57.4374 29.0005C57.4374 13.3202 44.6801 0.562988 28.9999 0.562988ZM39.2223 30.272L23.5749 39.7247C23.3506 39.8591 23.0946 39.9314 22.8332 39.9342C22.5717 39.9369 22.3142 39.8701 22.0871 39.7406C21.86 39.611 21.6715 39.4234 21.5408 39.1969C21.4102 38.9705 21.3421 38.7133 21.3436 38.4519V19.5491C21.3421 19.2877 21.4102 19.0305 21.5408 18.8041C21.6715 18.5776 21.86 18.3899 22.0871 18.2604C22.3142 18.1308 22.5717 18.064 22.8332 18.0668C23.0946 18.0696 23.3506 18.1419 23.5749 18.2763L39.2223 27.729C39.4404 27.8619 39.6207 28.0486 39.7458 28.2713C39.8709 28.494 39.9366 28.7451 39.9366 29.0005C39.9366 29.2559 39.8709 29.507 39.7458 29.7297C39.6207 29.9523 39.4404 30.1391 39.2223 30.272Z',
+});
+
+Home.redirectAuthenticatedTo = "/app"
 Home.suppressFirstRenderFlicker = true
-Home.getLayout = (page) => <Layout title="Home">{page}</Layout>
+Home.getLayout = (page) => <PublicLayout title='XPerks | Find an esports coach today!'>{page}</PublicLayout>
 
 export default Home

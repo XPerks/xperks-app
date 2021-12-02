@@ -1,8 +1,8 @@
-import { forwardRef, ComponentPropsWithoutRef, PropsWithoutRef } from "react"
+import { forwardRef, ComponentPropsWithoutRef, PropsWithoutRef, useEffect } from "react"
 import { useField, UseFieldConfig } from "react-final-form"
-import { Input, InputProps, FormLabel } from "@chakra-ui/react"
+import { Select, SelectProps, FormLabel } from "@chakra-ui/react"
 
-export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElements["input"]> {
+export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElements["select"]> {
   /** Field name. */
   name: string
   /** Field label. */
@@ -12,10 +12,11 @@ export interface LabeledTextFieldProps extends PropsWithoutRef<JSX.IntrinsicElem
   outerProps?: PropsWithoutRef<JSX.IntrinsicElements["div"]>
   labelProps?: ComponentPropsWithoutRef<"label">
   fieldProps?: UseFieldConfig<string>
+  options: string[]
 }
 
-export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldProps & InputProps>(
-  ({ name, label, outerProps, fieldProps, labelProps, ...props }, ref) => {
+export const LabeledSelectField = forwardRef<HTMLSelectElement, LabeledTextFieldProps & SelectProps>(
+  ({ name, label, outerProps, fieldProps, labelProps, options, ...props }, ref) => {
     const {
       input,
       meta: { touched, error, submitError, submitting },
@@ -34,7 +35,11 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
       <div {...outerProps}>
         <FormLabel {...labelProps}>
           {label}
-          <Input mt="2" {...input} disabled={submitting} {...props} ref={ref} />
+          <Select mt="2" {...input} disabled={submitting} {...props} ref={ref} >
+            {options.map(op => {
+              return <option>{op}</option>
+            })}
+          </Select>
         </FormLabel>
 
         {touched && normalizedError && (
@@ -50,7 +55,7 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
             align-items: start;
             font-size: 1rem;
           }
-          input {
+          select {
             color: black;
             font-size: 1rem;
             padding: 0.25rem 0.5rem;
@@ -65,4 +70,4 @@ export const LabeledTextField = forwardRef<HTMLInputElement, LabeledTextFieldPro
   }
 )
 
-export default LabeledTextField
+export default LabeledSelectField

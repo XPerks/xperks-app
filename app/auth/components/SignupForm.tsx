@@ -1,5 +1,6 @@
 import { useMutation } from "blitz"
 import { LabeledTextField } from "app/core/components/LabeledTextField"
+import { LabeledSelectField } from "app/core/components/LabeledSelectField"
 import { Form, FORM_ERROR } from "app/core/components/Form"
 import signup from "app/auth/mutations/signup"
 import { Signup } from "app/auth/validations"
@@ -13,12 +14,10 @@ export const SignupForm = (props: SignupFormProps) => {
 
   return (
     <div>
-      <h1>Create an Account</h1>
-
       <Form
         submitText="Create Account"
         schema={Signup}
-        initialValues={{ email: "", password: "" }}
+        initialValues={{ email: "", password: "", role: "" }}
         onSubmit={async (values) => {
           try {
             await signupMutation(values)
@@ -35,6 +34,7 @@ export const SignupForm = (props: SignupFormProps) => {
       >
         <LabeledTextField name="email" label="Email" placeholder="Email" />
         <LabeledTextField name="password" label="Password" placeholder="Password" type="password" />
+        <LabeledSelectField name="role" label="Looking to be a Player or Coach?" placeholder="Select role..." options={['Student', 'Coach']}/>
       </Form>
     </div>
   )

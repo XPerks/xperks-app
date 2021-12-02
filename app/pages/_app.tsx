@@ -1,3 +1,4 @@
+import * as React from 'react'
 import {
   AppProps,
   ErrorBoundary,
@@ -7,7 +8,12 @@ import {
   ErrorFallbackProps,
   useQueryErrorResetBoundary,
 } from "blitz"
+import '@fontsource/montserrat/700.css'
+import '@fontsource/montserrat/400.css'
 import LoginForm from "app/auth/components/LoginForm"
+import { ChakraProvider } from "@chakra-ui/react";
+import theme from 'utils/theme'
+
 
 export default function App({ Component, pageProps }: AppProps) {
   const getLayout = Component.getLayout || ((page) => page)
@@ -17,7 +23,9 @@ export default function App({ Component, pageProps }: AppProps) {
       FallbackComponent={RootErrorFallback}
       onReset={useQueryErrorResetBoundary().reset}
     >
-      {getLayout(<Component {...pageProps} />)}
+        <ChakraProvider theme={theme}>
+          {getLayout(<Component {...pageProps} />)}
+        </ChakraProvider>
     </ErrorBoundary>
   )
 }
