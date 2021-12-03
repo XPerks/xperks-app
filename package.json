@@ -1,5 +1,5 @@
 {
-  "name": "blitzjs",
+  "name": "xperks-app",
   "version": "1.0.0",
   "scripts": {
     "dev": "blitz dev",
