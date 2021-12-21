@@ -7,7 +7,8 @@ export default async function getPopularGames(input, ctx: Ctx) {
       {
         priority: 'desc'
       }
-    ]
+    ],
+    take: 5
   })
 
   return games

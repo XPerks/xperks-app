@@ -32,12 +32,11 @@ import {
 import Footer from 'app/marketing/components/Footer'
 import changeAuthRole from 'app/auth/mutations/changeAuthRole'
 import { HamburgerIcon, AddIcon, ExternalLinkIcon, RepeatIcon, EditIcon } from '@chakra-ui/icons'
-import { ImProfile, ImCog} from 'react-icons/im'
-import {MdSwitchAccount} from 'react-icons/md'
-import {FaCalendarAlt, FaChalkboardTeacher, FaFileAlt, FaGraduationCap, FaHome, FaWallet} from 'react-icons/fa'
+import {FaCalendarAlt, FaChalkboardTeacher, FaFileAlt, FaGraduationCap, FaHome, FaWallet, FaQuestionCircle} from 'react-icons/fa'
 import logout from 'app/auth/mutations/logout'
 import { IconType } from 'react-icons'
 import { useCurrentUser } from '../hooks/useCurrentUser'
+import {AvatarMenu} from 'app/components/AvatarMenu'
 
 
 type LayoutProps = {
@@ -85,7 +84,7 @@ const StudentNav = ({sessionData, route, switchRole, currentUser}) => {
 }
 
 const SidebarLink = ({link, currentRoute, icon, label }) => {
-  console.log({currentRoute, link})
+  // console.log({currentRoute, link})
   let isActive = currentRoute === link
   return (
     <Link href={link}>
@@ -105,42 +104,6 @@ const SidebarLink = ({link, currentRoute, icon, label }) => {
         </Flex>
       {/* </Tooltip> */}
     </Link> 
-  )
-}
-
-const AvatarMenu = ({sessionData, placement, switchRole, currentUser}) => {
-  console.log(currentUser)
-  const router = useRouter()
-  const [logoutMutation] = useMutation(logout)
-
-  const signOut = async () => {
-    await logoutMutation()
-    router.push('/')
-  }
-
-
-  const renderRoleChange = () =>  sessionData.activeRole === 'Coach' 
-          ? (<MenuItem icon={<MdSwitchAccount />} onClick={() => switchRole('Student')}>Switch to Student</MenuItem>)
-          : (<MenuItem icon={<MdSwitchAccount />} onClick={() => switchRole('Coach')}>Switch to Coach</MenuItem>)
-
-  return (
-    <Menu placement={placement}>
-      <MenuButton h="45px" w="45px"> <Img rounded="lg" src={currentUser?.avatar}/></MenuButton>
-      <MenuList>
-        <MenuGroup title="Profile">
-          {sessionData?.roles?.includes('Coach') && renderRoleChange()}
-          <Link href="/app/settings">
-            <MenuItem icon={<ImCog />} >
-              Settings
-            </MenuItem>
-          </Link>
-        </MenuGroup>
-        <MenuDivider/>
-        <MenuItem onClick={async () => {await signOut()}} icon={<EditIcon />} >
-          Sign Out
-        </MenuItem>
-      </MenuList>
-    </Menu>
   )
 }
 

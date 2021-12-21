@@ -20,11 +20,7 @@ import {
 } from '@chakra-ui/react'
 import FeaturedCoach from "app/marketing/components/FeaturedCoachPreviewCard"
 import PopularGamesSection from "app/marketing/components/PopularGamesSection"
-
-/*
- * This file is just for a pleasant getting started page for your new app.
- * You can delete everything in here and start from scratch if you like.
- */
+import FeaturesSection from "app/marketing/components/FeaturesSection"
 
 const Home: BlitzPage = () => {
   return (
@@ -54,7 +50,7 @@ const Home: BlitzPage = () => {
               //   zIndex: -1,
               // }}
               >
-              Hire an expert coach,
+              Hire an expert,
             </Text>
             <br />
             <Text as={'span'} color={'brand.green'}>
@@ -62,7 +58,7 @@ const Home: BlitzPage = () => {
             </Text>
           </Heading>
           <Text color={'gray.500'}>
-            Is your team in need of a coach, but you're unsure where to find one? Tired of constantly losing to high skill players? Looking to take your gaming skill to the next level? Hire an XPerks coach, and start winning more games today!
+            Tired of constantly losing to high skill players? Is your team in need of a coach, but you're unsure where to find one?  Looking to take your gaming skill to the next level? Hire an XPerks coach, and start winning more games today!
           </Text>
           <Stack
             spacing={{ base: 4, sm: 6 }}
@@ -70,18 +66,18 @@ const Home: BlitzPage = () => {
             <Button
               rounded={'lg'}
               size={'lg'}
-              fontWeight={'normal'}
+              fontWeight={'bold'}
               px={6}
               colorScheme={'red'}
               bg={'brand.green'}
               _hover={{ bg: 'green.500' }}
             >
-              Get started
+              Book a Session
             </Button>
             <Button
               rounded={'lg'}
               size={'lg'}
-              fontWeight={'normal'}
+              fontWeight={'bold'}
               px={6}
               leftIcon={<PlayIcon h={4} w={4} color={'gray.300'} />}>
               How It Works
@@ -147,6 +143,7 @@ const Home: BlitzPage = () => {
           <Box position="sticky" top={12} h="250px" w={{base: "100%", lg: "45%"}} bgColor="white"></Box>
         </Flex>
       </Box> */}
+      <FeaturesSection />
       <Box mt="36" width="100%">
         <Heading>Meet some of our top talent.</Heading>
         <Text>If you want to beat the best, you've gotta learn from the best.</Text>

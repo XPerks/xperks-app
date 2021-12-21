@@ -30,6 +30,7 @@ export default function WithSubnavigation() {
 
   return (
     <Box
+      zIndex={2}
       position="sticky"
       top="0"
       borderBottom={1}

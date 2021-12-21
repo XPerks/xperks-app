@@ -19,6 +19,7 @@ model User {
   name           String?
   email          String    @unique
   hashedPassword String?
+  isConfirmed    Boolean   @default(false)
   roles          String[]
   tokens         Token[]
   sessions       Session[]
@@ -37,16 +38,16 @@ model User {
 // }
 
 model Coach {
-  id            Int      @id @default(autoincrement())
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+  id            Int        @id @default(autoincrement())
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
   featuredImage String?
-  user          User?    @relation(fields: [userId], references: [id])
-  userId        Int?     @unique
+  user          User?      @relation(fields: [userId], references: [id])
+  userId        Int?       @unique
   username      String?
-  verified      Boolean  @default(false)
+  verified      Boolean    @default(false)
   // learningPaths        LearningPath[]
-  // tutorials            Tutorial[]
+  tutorials     Tutorial[]
   // CoachGameIntegration CoachGameIntegration[]
   // Team                 Team?
   // platforms            GamePlatform[]
@@ -192,35 +193,37 @@ model Student {
 // }
 
 model Game {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        Int        @id @default(autoincrement())
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
   name      String
   avatar    String?
   thumbnail String?
   banner    String?
   cover     String?
   priority  Int?
-  // tutorials             Tutorial[]
+  tutorials Tutorial[]
+  category  String?
   // players               StudentGameIntegration[]
   // coachGameIntegrations CoachGameIntegration[]
   // Team                 Team[]
   // coachServices         CoachService[]
 }
 
-// model Tutorial {
-//   id          Int      @id @default(autoincrement())
-//   createdAt   DateTime @default(now())
-//   updatedAt   DateTime @updatedAt
-//   author      Coach?   @relation(fields: [authorId], references: [id])
-//   authorId    Int?
-//   title       String
-//   description String
-//   body        String
-//   game        Game?    @relation(fields: [gameId], references: [id])
-//   gameId      Int?
-//   // comments  TutorialComments[]
-// }
+model Tutorial {
+  id          Int      @id @default(autoincrement())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  author      Coach?   @relation(fields: [authorId], references: [id])
+  authorId    Int?
+  title       String
+  description String
+  body        String
+  game        Game?    @relation(fields: [gameId], references: [id])
+  gameId      Int?
+  category  String? 
+  // comments  TutorialComments[]
+}
 
 // model TutorialComments {
 //   id         Int                 @id @default(autoincrement())
